@@ -1,8 +1,12 @@
+# podman-in-podman
+
+This repo demonstrates how it's possible to build an OIC container inside Podman using Podman, without root access at either point.
+
 ## Tasks
 
 ### build
 
-Build a container that contains Podman.
+Build a container that contains Podman. This is where the child container will be built.
 
 ```
 podman build . -t parent:latest
