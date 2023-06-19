@@ -20,7 +20,7 @@ FROM rockylinux:9
 #       https://bugzilla.redhat.com/show_bug.cgi?id=1995337#c3
 RUN dnf -y update && \
     rpm --setcaps shadow-utils 2>/dev/null && \
-    dnf -y install podman fuse-overlayfs openssh-clients \
+    dnf -y install podman fuse-overlayfs openssh-clients crun \
         --exclude container-selinux && \
     dnf clean all && \
     rm -rf /var/cache /var/log/dnf* /var/log/yum.*
@@ -63,8 +63,5 @@ RUN mkdir -p /var/lib/shared/overlay-images \
 
 ENV _CONTAINERS_USERNS_CONFIGURED=""
 
-# a-h: Add the Dockerfile and scripts in.
-COPY child/Dockerfile /Dockerfile
-COPY build.sh /build.sh
-RUN chmod 777 /Dockerfile
-RUN chmod 777 /build.sh
+WORKDIR /home/podman
+USER podman
